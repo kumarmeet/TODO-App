@@ -21,7 +21,7 @@ const todoList = {
 
   setElements() {
     this.elements.input = document.querySelector("#text");
-    this.elements.addBtn = document.querySelector("button");
+    this.elements.addBtn = document.querySelector(".add-btn");
     this.elements.section = document.querySelector("section");
   },
 
@@ -33,15 +33,21 @@ const todoList = {
 
     this.createElement.span.textContent = this.getInputValue();
 
-    this.createElement.div.append(
-      this.createElement.span,
-      this.createElement.inputCheckbox
-    );
+    //font awsome
+    const fontA = document.createElement("i");
+    fontA.classList.add("far");
+    fontA.classList.add("fa-trash-alt");
+
+    this.createElement.div.append(this.createElement.span, fontA);
+
+    //using for checkbox
+    // this.createElement.div.append(this.createElement.span, this.createElement.inputCheckbox);
 
     this.elements.section.append(this.createElement.div);
     this.elements.input.value = "";
 
-    this.items.push({ ...this.createElement });
+    //saving value of adding by user
+    this.items.push(this.createElement.value);
     console.log(this.items);
 
     this.deleteItem();
@@ -53,34 +59,27 @@ const todoList = {
       this.createItem("div", "span", "input");
     });
   },
-  
-  //fix this function
+
   deleteItem() {
     if (this.items.length) {
-      this.items[0].div.addEventListener(
-        "click",
-        this.deleteItemHandler.bind(this)
-      );
-    }
-  },
-  
-  //fix this function
-  deleteItemHandler() {
-    const del = [];
-    if (this.items.length) {
-      for (const item of this.items) {
-        if (item.inputCheckbox.checked === true) {
-          del.push(item.div);
-        }
-      }
+      //using event delegation approach
+      const section = document.querySelector("section");
 
-      console.log(del);
+      //using checkbox
+      // section.addEventListener("click", (e) => {
+      //   if (e.target.checked === true) {
+      //     setTimeout(() => {
+      //       e.target.closest("div").remove();
+      //     }, 200);
+      //   }
+      // });
 
-      for (const d of del) {
-        d.remove();
-      }
-
-      del.splice(0);
+      //font awsome
+      section.addEventListener("click", (e) => {
+        setTimeout(() => {
+          e.target.closest("div").remove();
+        }, 200);
+      });
     }
   },
 
