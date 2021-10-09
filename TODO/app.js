@@ -10,7 +10,7 @@ const todoList = {
   createElement: {
     div: null,
     span: null,
-    inputCheckbox: null,
+    iTag: null,
     value: null,
   },
 
@@ -25,60 +25,51 @@ const todoList = {
     this.elements.section = document.querySelector("section");
   },
 
-  createItem(div, span, input) {
+  createItem(div, span, i) {
     this.createElement.div = document.createElement(div);
     this.createElement.span = document.createElement(span);
-    this.createElement.inputCheckbox = document.createElement(input);
-    this.createElement.inputCheckbox.setAttribute("type", "checkbox");
+    this.createElement.iTag = document.createElement(i);
 
     this.createElement.span.textContent = this.getInputValue();
 
-    //font awsome
-    const fontA = document.createElement("i");
-    fontA.classList.add("far");
-    fontA.classList.add("fa-trash-alt");
+    this.createElement.iTag.classList.add("far", "fa-trash-alt");
 
-    this.createElement.div.append(this.createElement.span, fontA);
+    //empty input won't adding any items
+    if (this.createElement.value) {
+      this.createElement.div.append(
+        this.createElement.span,
+        this.createElement.iTag
+      );
 
-    //using for checkbox
-    // this.createElement.div.append(this.createElement.span, this.createElement.inputCheckbox);
+      this.elements.section.append(this.createElement.div);
+      //saving value of adding by user
+      this.items.push(this.createElement.value);
 
-    this.elements.section.append(this.createElement.div);
-    this.elements.input.value = "";
+      console.log(this.items);
 
-    //saving value of adding by user
-    this.items.push(this.createElement.value);
-    console.log(this.items);
-
+      this.elements.input.value = "";
+    }
     this.deleteItem();
   },
 
   addItem() {
     this.setElements();
+
     this.elements.addBtn.addEventListener("click", () => {
-      this.createItem("div", "span", "input");
+      this.createItem("div", "span", "i");
     });
   },
 
   deleteItem() {
     if (this.items.length) {
       //using event delegation approach
-      const section = document.querySelector("section");
 
-      //using checkbox
-      // section.addEventListener("click", (e) => {
-      //   if (e.target.checked === true) {
-      //     setTimeout(() => {
-      //       e.target.closest("div").remove();
-      //     }, 200);
-      //   }
-      // });
-
-      //font awsome
-      section.addEventListener("click", (e) => {
+      document.querySelector("section").addEventListener("click", (e) => {
         setTimeout(() => {
-          e.target.closest("div").remove();
-        }, 200);
+          if (e.target.classList.contains("far")) {
+            e.target.closest("div").remove();
+          }
+        }, 150);
       });
     }
   },
