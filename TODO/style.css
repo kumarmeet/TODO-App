@@ -83,16 +83,3 @@ section span {
 .far:hover {
   color: rgb(255, 79, 79);
 }
-
-/* using checkbox */
-/* section input {
-  appearance: none;
-  width: 2rem;
-  height: 2rem;
-  border: 1px solid hotpink;
-  cursor: pointer;
-}
-
-input[type="checkbox"]:checked {
-  background-color: hotpink;
-} */
