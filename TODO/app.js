@@ -5,6 +5,7 @@ const todoList = {
     input: null,
     addBtn: null,
     section: null,
+    time: null,
   },
 
   createElement: {
@@ -23,6 +24,12 @@ const todoList = {
     this.elements.input = document.querySelector("#text");
     this.elements.addBtn = document.querySelector(".add-btn");
     this.elements.section = document.querySelector("section");
+    this.elements.time = document.querySelector("h4");
+  },
+
+  setTimeAndDate() {
+    const t_d = new Date().toDateString();
+    this.elements.time.textContent = t_d;
   },
 
   createItem(div, span, i) {
@@ -56,7 +63,7 @@ const todoList = {
     this.setElements();
 
     this.elements.addBtn.addEventListener("click", () => {
-      this.createItem("div", "span", "i");
+      this.createItem("div", "span", "i", "h4");
     });
   },
 
@@ -76,6 +83,7 @@ const todoList = {
 
   init() {
     this.addItem();
+    this.setTimeAndDate();
   },
 };
 
